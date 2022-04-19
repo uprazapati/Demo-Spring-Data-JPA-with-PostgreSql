@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 @Table(name = "ticket_prices")
 @NamedQuery(
         name = "TicketPrice.namedFindTicketsByPricingCategoryName",
-        query = "select tp from TicketPrice tp where tp.pricingCategory.pricingCategoryName = :name"
+        query = "select tp from TicketPrice tp where tp.pricingCategory.pricingCategoryName = :name " +
+                "and tp.ticketType.includesWorkshop = true"
 )
 @NamedNativeQuery(
         name = "TicketPrice.nativeFindTicketsByCategoryWithWorkshop",

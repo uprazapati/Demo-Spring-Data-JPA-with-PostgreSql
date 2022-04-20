@@ -13,10 +13,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TicketPriceTest {
@@ -59,5 +60,25 @@ public class TicketPriceTest {
 
         repository.deleteById(otherTp.getTicketPriceId());
     }
+
+    @Test
+    public void testQueryAnnotation() throws Exception {
+        List<TicketPrice> tp = repository.getTicketsUnderPriceWithWorkshop(BigDecimal.valueOf(1000));
+        assertTrue(tp.size() > 0);
+    }
+
+    @Test
+    public void testNamedQuery() throws Exception {
+        List<TicketPrice> tp = repository.namedFindTicketsByPricingCategoryName("Regular");
+        assertTrue(tp.size() > 0);
+    }
+
+    @Test
+    public void testNativeNamedQuery() throws Exception {
+        List<TicketPrice> tp = repository.nativeFindTicketsByCategoryWithWorkshop("Regular");
+        assertTrue(tp.size() > 0);
+    }
+
+
 
 }
